@@ -43,6 +43,28 @@ public class QuakeSortInPlace {
         
         return maxIndex;
     }
+    /**
+     * Returns true if the earthquakes are in sorted order
+     * by magnitude from smallest to largest. Otherwise this methods 
+     * returns false.*/
+    public boolean checkInSortedOrder(ArrayList<QuakeEntry> quakes) {
+        
+        //I have to check if they are in order. For this, I can make a copy of quakes first.
+        ArrayList<QuakeEntry> quakesClone = new ArrayList<QuakeEntry>(quakes);
+        
+        //Then compare if the copy equals quake after calling sortByMagnitude method. 
+        sortByMagnitude(quakesClone);
+        //If it is equal, then return true. 
+        
+        /*System.out.println("");
+        System.out.println(quakes);
+        System.out.println(quakesClone);
+        System.out.println("");*/
+        
+        //Otherwise,return false.
+        return quakesClone.equals(quakes);
+    }
+    
     
     
     /**
@@ -114,15 +136,41 @@ public class QuakeSortInPlace {
         }
     }
     
+    /**
+     * This method prints how many passes were needed to sort the elements. 
+     */
+    public void sortByMagnitudeWithBubbleSortWithCheck(ArrayList<QuakeEntry> in) {
+        //Create an element to count the number of times the loop was executed or in other words, 
+        //the number of times the array was sorted calling checkInSortedOrder method.
+        int times = 0;
+        
+        //N elements represents the size of the array. So, I have to iterate this loop (N - 1) times
+        for (int i = 0; i < in.size() - 1; i++) {
+            
+            //and each time the loop iterates, it first checks if the array is in sorted order. So, if it
+            //is already in sorted order, then break the loop 
+            //Count times += 1 to keep count of the current time number executed.
+            
+            times += 1;
+            onePassBubbleSort(in, i);
+            if (checkInSortedOrder(in)) break;
+            
+            //System.out.println("");
+            //for (QuakeEntry qe : in) System.out.println(qe);
+        }
+        //and prit the number of times the loop was executed.
+        System.out.println("The number of passes required to sort the elements from the array is " + times + ".");
+    }
+    
     public void testSort() {
         EarthQuakeParser parser = new EarthQuakeParser(); 
         //String source = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.atom";
         //String source = "data/nov20quakedatasmall.atom";
         //String source = "data/nov20quakedata.atom";
-        String source = "data/earthquakeDataSampleSix2.atom";
+        String source = "data/earthquakeDataSampleSix1.atom";
         
         ArrayList<QuakeEntry> list  = parser.read(source);  
-       
+        
         System.out.println("read data for "+list.size()+" quakes");    
         //sortByMagnitude(list);
         //sortByLargestDepth(list);
@@ -130,6 +178,9 @@ public class QuakeSortInPlace {
             
             System.out.println(qe);
         } 
+        
+        ArrayList<QuakeEntry> cloneList = new ArrayList<QuakeEntry>(list);
+        
         
         sortByMagnitudeWithBubbleSort(list);
         
@@ -139,6 +190,10 @@ public class QuakeSortInPlace {
             
             System.out.println(qe);
         } 
+        
+        System.out.println("");
+        sortByMagnitudeWithBubbleSortWithCheck(cloneList);
+        
         
     }
     
