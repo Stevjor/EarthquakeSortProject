@@ -24,6 +24,45 @@ public class QuakeSortInPlace {
         return minIdx;
     }
     
+    
+    /**
+     * This method gets the largest depth of an ArrayList of type QuakeEntry
+     * and returns the position of such index.
+     */
+    public int getLargestDepth(ArrayList<QuakeEntry> quakeData, int from) {
+        int maxIndex = from;
+        //Iterate through the quakeData starting from "from + 1" position
+        for (int i = from + 1; i < quakeData.size(); i++) {
+            double currentDepth = quakeData.get(i).getDepth();
+            double currentMaxDepth = quakeData.get(maxIndex).getDepth();
+            if (currentDepth > currentMaxDepth) {
+                currentMaxDepth = currentDepth;
+                maxIndex = i;
+            }
+        }
+        
+        return maxIndex;
+    }
+    
+    
+    /**
+     * Sorts an ArrayList of type QuakeEntry from largest depth to lowest
+     * depth.
+    */
+    public void sortByLargestDepth(ArrayList<QuakeEntry> in) {
+        //for each element in myArray from index 0 to the index of the last element from my array and assing "i" each index position:
+        for (int i = 0; i < in.size(); i++) {
+            //call getLargetDepth at index "i" and assing value "largest".
+            int largest = getLargestDepth(in, i);
+            
+            QuakeEntry iQuake = in.get(i);
+            QuakeEntry largestQuake = in.get(largest);
+            //swap elements at indexes "i" and "largest".
+            in.set(i, largestQuake);
+            in.set(largest, iQuake);
+        }
+    }
+    
     public void sortByMagnitude(ArrayList<QuakeEntry> in) {
        
        for (int i=0; i< in.size(); i++) {
@@ -44,7 +83,8 @@ public class QuakeSortInPlace {
         ArrayList<QuakeEntry> list  = parser.read(source);  
        
         System.out.println("read data for "+list.size()+" quakes");    
-        sortByMagnitude(list);
+        //sortByMagnitude(list);
+        sortByLargestDepth(list);
         for (QuakeEntry qe: list) { 
             System.out.println(qe);
         } 
@@ -62,14 +102,14 @@ public class QuakeSortInPlace {
     }
     
     public void dumpCSV(ArrayList<QuakeEntry> list) {
-		System.out.println("Latitude,Longitude,Magnitude,Info");
-		for(QuakeEntry qe : list){
-			System.out.printf("%4.2f,%4.2f,%4.2f,%s\n",
-			                  qe.getLocation().getLatitude(),
-			                  qe.getLocation().getLongitude(),
-			                  qe.getMagnitude(),
-			                  qe.getInfo());
-	    }
-		
-	}
+        System.out.println("Latitude,Longitude,Magnitude,Info");
+        for(QuakeEntry qe : list){
+            System.out.printf("%4.2f,%4.2f,%4.2f,%s\n",
+                              qe.getLocation().getLatitude(),
+                              qe.getLocation().getLongitude(),
+                              qe.getMagnitude(),
+                              qe.getInfo());
+        }
+        
+    }
 }
