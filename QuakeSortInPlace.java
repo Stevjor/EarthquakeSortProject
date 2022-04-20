@@ -73,7 +73,7 @@ public class QuakeSortInPlace {
     */
     public void sortByLargestDepth(ArrayList<QuakeEntry> in) {
         //for each element in myArray from index 0 to the index of the last element from my array and assing "i" each index position:
-        for (int i = 0; i < in.size(); i++) {
+        for (int i = 0; i < 70; i++) {
             //call getLargetDepth at index "i" and assing value "largest".
             int largest = getLargestDepth(in, i);
             
@@ -192,13 +192,21 @@ public class QuakeSortInPlace {
         //String source = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.atom";
         //String source = "data/nov20quakedatasmall.atom";
         //String source = "data/nov20quakedata.atom";
-        String source = "data/earthquakeDataSampleSix2.atom";
-        
+        //String source = "data/earthquakeDataSampleSix2.atom";
+        //String source = "data/earthQuakeDataDec6sample1.atom";
+        String source = "data/earthQuakeDataDec6sample2.atom";
         ArrayList<QuakeEntry> list  = parser.read(source);  
         
         System.out.println("read data for "+list.size()+" quakes");    
         //sortByMagnitude(list);
-        //sortByLargestDepth(list);
+        /*sortByLargestDepth(list);
+        
+        for (QuakeEntry qe: list) {
+            
+            System.out.println(qe);
+        } */
+        
+        
         for (QuakeEntry qe: list) {
             
             System.out.println(qe);
@@ -222,6 +230,7 @@ public class QuakeSortInPlace {
         System.out.println("");
         
         sortByMagnitudeWithCheck(cloneList2);
+        
     }
     
     public void createCSV() {
