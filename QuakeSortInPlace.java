@@ -162,12 +162,37 @@ public class QuakeSortInPlace {
         System.out.println("The number of passes required to sort the elements from the array is " + times + ".");
     }
     
+    /**
+     * Sorts earthquakes by their magnitude from smallest to largest using selection 
+     * sort by calling checkInSortedOrder and stop early if the ArrayList is already sorted.
+     * 
+     */
+    public void sortByMagnitudeWithCheck(ArrayList<QuakeEntry> in) {
+        /*
+           This method sorts earthquakes by their magnitude from smallest to largest using selection 
+           sort similar to the sortByMagnitude method. However, this method should call checkInSortedOrder and stop 
+           early if the ArrayList is already sorted. This method should print how many passes were needed to sort 
+           the elements. For selection sort, one pass has exactly one swap. 
+           */
+        int times = 0;
+        for (int i=0; i< in.size(); i++) {
+            int minIdx = getSmallestMagnitude(in,i);
+            QuakeEntry qi = in.get(i);
+            QuakeEntry qmin = in.get(minIdx);
+            in.set(i,qmin);
+            in.set(minIdx,qi);
+            times += 1;
+            if (checkInSortedOrder(in)) break;
+        }
+        System.out.println("The number of swaps required to sort the elements from the array is " + times + ".");
+    }
+    
     public void testSort() {
         EarthQuakeParser parser = new EarthQuakeParser(); 
         //String source = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.atom";
         //String source = "data/nov20quakedatasmall.atom";
         //String source = "data/nov20quakedata.atom";
-        String source = "data/earthquakeDataSampleSix1.atom";
+        String source = "data/earthquakeDataSampleSix2.atom";
         
         ArrayList<QuakeEntry> list  = parser.read(source);  
         
@@ -180,7 +205,7 @@ public class QuakeSortInPlace {
         } 
         
         ArrayList<QuakeEntry> cloneList = new ArrayList<QuakeEntry>(list);
-        
+        ArrayList<QuakeEntry> cloneList2 = new ArrayList<QuakeEntry>(list);
         
         sortByMagnitudeWithBubbleSort(list);
         
@@ -194,7 +219,9 @@ public class QuakeSortInPlace {
         System.out.println("");
         sortByMagnitudeWithBubbleSortWithCheck(cloneList);
         
+        System.out.println("");
         
+        sortByMagnitudeWithCheck(cloneList2);
     }
     
     public void createCSV() {
