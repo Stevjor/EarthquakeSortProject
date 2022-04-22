@@ -194,7 +194,8 @@ public class QuakeSortInPlace {
         //String source = "data/nov20quakedata.atom";
         //String source = "data/earthquakeDataSampleSix2.atom";
         //String source = "data/earthQuakeDataDec6sample1.atom";
-        String source = "data/earthQuakeDataDec6sample2.atom";
+        //String source = "data/earthQuakeDataDec6sample2.atom";
+        String source = "data/earthQuakeDataWeekDec6sample1.atom";
         ArrayList<QuakeEntry> list  = parser.read(source);  
         
         System.out.println("read data for "+list.size()+" quakes");    
@@ -204,9 +205,9 @@ public class QuakeSortInPlace {
         for (QuakeEntry qe: list) {
             
             System.out.println(qe);
-        } */
-        
-        
+        } 
+        */
+        /*
         for (QuakeEntry qe: list) {
             
             System.out.println(qe);
@@ -229,8 +230,9 @@ public class QuakeSortInPlace {
         
         System.out.println("");
         
-        sortByMagnitudeWithCheck(cloneList2);
-        
+        sortByMagnitudeWithCheck(cloneList2);*/
+        //sortByMagnitudeWithCheck(list);
+        sortByMagnitudeWithBubbleSortWithCheck(list);
     }
     
     public void createCSV() {
